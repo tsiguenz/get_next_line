@@ -47,7 +47,6 @@ char	*ft_return_next_line(char **str)
 		(*str)++;
 	}
 	res[i] = '\n';
-	res[i + 1] = 0;
 	(*str)++;
 	return (res);
 }
@@ -91,7 +90,7 @@ char	*get_next_line(int fd)
 	}
 	return (ft_return_next_line(&res));
 }
-/*
+
 int	main(void)
 {
 	int		fd;
@@ -99,14 +98,16 @@ int	main(void)
 
 	fd = open("text.txt", O_RDONLY);
 	str = get_next_line(fd);
-	while (str)
+	printf("%s", str);
+/*	while (str)
 	{
 		printf("%s", str);
 		str = get_next_line(fd);
 	}
 	str = get_next_line(fd);
 	printf("%s", str);
+*/
 	free(str);
 	return (0);
 }
-*/
+

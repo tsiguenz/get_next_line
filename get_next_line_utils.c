@@ -17,8 +17,6 @@ int	ft_strlen(char *s)
 	int	i;
 
 	i = 0;
-	if (!s)
-		return (0);
 	while (s[i])
 		i++;
 	return (i);
@@ -30,7 +28,7 @@ char	*ft_strdup(char *s)
 	char	*dup;
 
 	i = 0;
-	dup = malloc((ft_strlen(s) + 1) * sizeof(char));
+	dup = ft_calloc((ft_strlen(s) + 1), sizeof(char));
 	if (!dup)
 		return (0);
 	while (s[i])
@@ -38,7 +36,6 @@ char	*ft_strdup(char *s)
 		dup[i] = s[i];
 		i++;
 	}
-	dup[i] = 0;
 	return (dup);
 }
 
@@ -48,6 +45,8 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void	*ptr;
 
 	i = 0;
+	if (!nmemb)
+		return (0);
 	ptr = malloc(nmemb * size);
 	if (ptr == 0)
 		return (0);
@@ -68,7 +67,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	res = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (res == 0)
+	if (!res)
 		return (0);
 	while (s1[i])
 	{
