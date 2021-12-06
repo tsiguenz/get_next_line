@@ -6,31 +6,32 @@
 /*   By: tsiguenz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:10:44 by tsiguenz          #+#    #+#             */
-/*   Updated: 2021/12/05 23:15:41 by tsiguenz         ###   ########.fr       */
+/*   Updated: 2021/12/06 16:59:57 by tsiguenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-int	ft_strlen(const char *s)
+int	ft_strlen(char *s)
 {
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i])
 		i++;
 	return (i);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	int		i;
 	char	*dup;
 
 	i = 0;
 	dup = malloc((ft_strlen(s) + 1) * sizeof(char));
-	if (dup == 0)
+	if (!dup)
 		return (0);
 	while (s[i])
 	{
@@ -41,7 +42,24 @@ char	*ft_strdup(const char *s)
 	return (dup);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	size_t	i;
+	void	*ptr;
+
+	i = 0;
+	ptr = malloc(nmemb * size);
+	if (ptr == 0)
+		return (0);
+	while (i < (nmemb * size))
+	{
+		*(char *)(ptr + i) = 0;
+		i++;
+	}
+	return (ptr);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
