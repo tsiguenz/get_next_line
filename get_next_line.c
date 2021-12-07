@@ -6,7 +6,7 @@
 /*   By: tsiguenz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:10:35 by tsiguenz          #+#    #+#             */
-/*   Updated: 2021/12/06 17:34:19 by tsiguenz         ###   ########.fr       */
+/*   Updated: 2021/12/07 18:15:51 by tsiguenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
+char	*ft_cut_before_cr(char *str)
+{
+	char	*res;
+	int		i;
+
+	i = 0;
+	res = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	res = ft_calloc((ft_strlen(str) - (i)) + 1, sizeof(char));
+	if (!res)
+		return (0);
+	res = ft_strdup(&str[i + 1]);
+	free(str);
+	return (res);
+}
 
 int	ft_pos_cr(char *str)
 {
@@ -31,23 +48,21 @@ int	ft_pos_cr(char *str)
 	return (-1);
 }
 
-char	*ft_return_next_line(char **str)
+char	*ft_return_next_line(char *str)
 {
 	int		i;
 	char	*res;
 
 	i = 0;
-	res = ft_calloc((ft_pos_cr(*str) + 2), sizeof(char));
+	res = ft_calloc((ft_pos_cr(str) + 2), sizeof(char));
 	if (!res)
 		return (0);
-	while (**str && **str != '\n')
+	while (str[i] && str[i] != '\n')
 	{
-		res[i] = **str;
+		res[i] = str[i];
 		i++;
-		(*str)++;
 	}
 	res[i] = '\n';
-	(*str)++;
 	return (res);
 }
 
@@ -78,17 +93,23 @@ char	*ft_fill_res(char *res, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*res;
+	static char	*str;
+	char		*next_line;
 
-	if (!res)
-		res = ft_fill_res(res, fd);
-	while (ft_pos_cr(res) == -1)
+	while (ft_pos_cr(str) == -1)
 	{
-		res = ft_fill_res(res, fd);
-		if (!res)
+		str = ft_fill_res(str, fd);
+		if (!str)
 			return (0);
+		if (!*str)
+		{
+			free(str);
+			return (0);
+		}
 	}
-	return (ft_return_next_line(&res));
+	next_line = ft_return_next_line(str);
+	str = ft_cut_before_cr(str);
+	return (next_line);
 }
 
 int	main(void)

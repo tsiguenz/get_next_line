@@ -6,7 +6,7 @@
 /*   By: tsiguenz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:10:44 by tsiguenz          #+#    #+#             */
-/*   Updated: 2021/12/06 16:59:57 by tsiguenz         ###   ########.fr       */
+/*   Updated: 2021/12/07 17:53:25 by tsiguenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	void	*ptr;
 
 	i = 0;
-	if (!nmemb)
+	if (!nmemb || !size)
 		return (0);
 	ptr = malloc(nmemb * size);
 	if (ptr == 0)
