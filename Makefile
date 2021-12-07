@@ -6,12 +6,12 @@
 #    By: tsiguenz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/02 12:23:38 by tsiguenz          #+#    #+#              #
-#    Updated: 2021/12/06 17:22:33 by tsiguenz         ###   ########.fr        #
+#    Updated: 2021/12/08 00:05:15 by tsiguenz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=1
+FLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=10000
 FSAN = -g3 -fsanitize=address
 SRC = get_next_line.c get_next_line_utils.c
 NAME = gnl
