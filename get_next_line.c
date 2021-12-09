@@ -6,7 +6,7 @@
 /*   By: tsiguenz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:10:35 by tsiguenz          #+#    #+#             */
-/*   Updated: 2021/12/09 16:07:59 by tsiguenz         ###   ########.fr       */
+/*   Updated: 2021/12/09 17:00:22 by tsiguenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-char	*ft_new_stat(char *stat)
+static char	*ft_new_stat(char *stat)
 {
 	char	*new_stat;
 	int		i;
@@ -34,7 +34,7 @@ char	*ft_new_stat(char *stat)
 	return (new_stat);
 }
 
-int	ft_len_next_line(char *stat, int read_val)
+static int	ft_len_next_line(char *stat, int read_val)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ int	ft_len_next_line(char *stat, int read_val)
 	return (0);
 }
 
-char	*ft_get_line(char *stat, int read_val)
+static char	*ft_get_line(char *stat, int read_val)
 {
 	int		i;
 	int		len;
@@ -78,7 +78,7 @@ char	*ft_get_line(char *stat, int read_val)
 	return (res);
 }
 
-char	*ft_fill_stat(char *stat, int fd, int *read_val)
+static char	*ft_fill_stat(char *stat, int fd, int *read_val)
 {
 	char	*tmp;
 	char	*new_stat;
@@ -109,7 +109,7 @@ char	*get_next_line(int fd)
 	next_line = 0;
 	if ((fd < 0 || fd > FOPEN_MAX) || (!read_val && !stat[fd]))
 		return (0);
-	while (ft_len_next_line(stat[fd], read_val) == 0 && read_val != 0)
+	while (!ft_len_next_line(stat[fd], read_val) && read_val && read_val != -1)
 		stat[fd] = ft_fill_stat(stat[fd], fd, &read_val);
 	next_line = ft_get_line(stat[fd], read_val);
 	stat[fd] = ft_new_stat(stat[fd]);
