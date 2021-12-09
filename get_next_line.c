@@ -6,7 +6,7 @@
 /*   By: tsiguenz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:10:35 by tsiguenz          #+#    #+#             */
-/*   Updated: 2021/12/08 18:58:42 by tsiguenz         ###   ########.fr       */
+/*   Updated: 2021/12/09 14:41:41 by tsiguenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*ft_new_stat(char *stat)
 	else
 		new_stat = ft_strdup(stat + i + 1);
 	free(stat);
+	stat = 0;
 	return (new_stat);
 }
 
@@ -104,7 +105,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || fd > FOPEN_MAX)
 		return (0);
-	next_line = 0;
 	read_val = 1;
 	while (ft_len_next_line(stat[fd], read_val) == 0 && read_val != 0)
 		stat[fd] = ft_fill_stat(stat[fd], fd, &read_val);
@@ -112,12 +112,15 @@ char	*get_next_line(int fd)
 	stat[fd] = ft_new_stat(stat[fd]);
 	return (next_line);
 }
-///*
+/*
 int	main(void)
 {
 	int		fd;
 	char	*str;
-	fd = open("text.txt", O_RDONLY);
+	
+	fd = open("text2.txt", O_RDONLY);
+	str = get_next_line(fd);
+	printf("%s", str);
 	while ((str = get_next_line(fd)))
 	{
 		printf("%s", str);
@@ -127,4 +130,4 @@ int	main(void)
 
 	return (0);
 }
-//*/
+*/
