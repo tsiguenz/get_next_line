@@ -6,7 +6,7 @@
 /*   By: tsiguenz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:10:35 by tsiguenz          #+#    #+#             */
-/*   Updated: 2021/12/09 14:41:41 by tsiguenz         ###   ########.fr       */
+/*   Updated: 2021/12/09 15:25:33 by tsiguenz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ char	*ft_fill_stat(char *stat, int fd, int *read_val)
 	else
 		new_stat = ft_strjoin(stat, tmp);
 	free(tmp);
-	free(stat);
+//	if (!stat)
+		free(stat);
 	return (new_stat);
 }
 
@@ -103,13 +104,15 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	int			read_val;
 
-	if (fd < 0 || fd > FOPEN_MAX)
-		return (0);
 	read_val = 1;
+	if ((fd < 0 || fd > FOPEN_MAX) || (!read_val && !stat[fd]))
+		return (0);
 	while (ft_len_next_line(stat[fd], read_val) == 0 && read_val != 0)
 		stat[fd] = ft_fill_stat(stat[fd], fd, &read_val);
 	next_line = ft_get_line(stat[fd], read_val);
 	stat[fd] = ft_new_stat(stat[fd]);
+	if (!next_line && stat[fd])
+		free(stat[fd]);
 	return (next_line);
 }
 /*
@@ -121,11 +124,15 @@ int	main(void)
 	fd = open("text2.txt", O_RDONLY);
 	str = get_next_line(fd);
 	printf("%s", str);
+	str = get_next_line(fd);
+	printf("%s", str);
+
 	while ((str = get_next_line(fd)))
 	{
 		printf("%s", str);
 		free(str);
 	}
+	printf("%s", str);
 	free(str);
 
 	return (0);
